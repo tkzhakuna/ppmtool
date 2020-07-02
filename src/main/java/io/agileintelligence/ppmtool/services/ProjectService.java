@@ -8,6 +8,10 @@ import io.agileintelligence.ppmtool.exceptions.ProjectNotFoundException;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
 import io.agileintelligence.ppmtool.repositories.ProjectRepository;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
+
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +27,10 @@ public class ProjectService {
     @Autowired
     private UserRepository userRepository;
 
-    public Project saveOrUpdateProject(Project project, String username){
+    public Project saveOrUpdateProject(Project project, String username,Long ownerId){
 
         if(project.getId() != null){
-            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier(),username);
             if(existingProject !=null &&(!existingProject.getProjectLeader().equals(username))){
                 throw new ProjectNotFoundException("Project not found in your account");
             }else if(existingProject == null){
@@ -37,7 +41,9 @@ public class ProjectService {
         try{
 
             User user = userRepository.findByUsername(username);
+            User owner=userRepository.getById(ownerId);
             project.setUser(user);
+            project.setOwner(owner);
             project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
@@ -55,6 +61,7 @@ public class ProjectService {
             return projectRepository.save(project);
 
         }catch (Exception e){
+        	e.printStackTrace();
             throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
         }
 
@@ -65,16 +72,16 @@ public class ProjectService {
 
         //Only want to return the project if the user looking for it is the owner
 
-        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase(), username);
 
         if(project == null){
             throw new ProjectIdException("Project ID '"+projectId+"' does not exist");
 
         }
 
-        if(!project.getProjectLeader().equals(username)){
-            throw new ProjectNotFoundException("Project not found in your account");
-        }
+//        if(!project.getProjectLeader().equals(username)){
+//            throw new ProjectNotFoundException("Project not found in your account");
+//        }
 
 
 

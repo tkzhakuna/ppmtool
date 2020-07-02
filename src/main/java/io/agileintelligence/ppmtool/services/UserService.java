@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-
+	enum Role{
+		ADMIN,USER
+	}
     @Autowired
     private UserRepository userRepository;
 
@@ -27,6 +29,7 @@ public class UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
+            newUser.setRole(Role.USER.name());
             return userRepository.save(newUser);
 
         }catch (Exception e){

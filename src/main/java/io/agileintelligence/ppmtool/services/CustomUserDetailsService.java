@@ -1,7 +1,11 @@
 package io.agileintelligence.ppmtool.services;
 
 import io.agileintelligence.ppmtool.domain.User;
+import io.agileintelligence.ppmtool.domain.UserDTO;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,5 +33,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(user==null) new UsernameNotFoundException("User not found");
         return user;
 
+    }
+    
+    
+    public List<User> findAll() {
+    	return (List<User>) userRepository.findAll();
     }
 }

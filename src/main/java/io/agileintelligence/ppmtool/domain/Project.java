@@ -3,6 +3,7 @@ package io.agileintelligence.ppmtool.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,8 +41,10 @@ public class Project {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private User owner;
+    
     private String projectLeader;
 
 
@@ -129,7 +132,17 @@ public class Project {
         this.user = user;
     }
 
-    public String getProjectLeader() {
+   
+
+    public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public String getProjectLeader() {
         return projectLeader;
     }
 

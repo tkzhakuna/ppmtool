@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String confirmPassword;
     private Date create_At;
     private Date update_At;
-
+    private String role;
     //OneToMany with Project
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
@@ -95,7 +95,17 @@ public class User implements UserDetails {
         this.update_At = update_At;
     }
 
-    public List<Project> getProjects() {
+    
+    
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public List<Project> getProjects() {
         return projects;
     }
 

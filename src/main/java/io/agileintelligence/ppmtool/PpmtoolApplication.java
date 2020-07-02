@@ -1,5 +1,6 @@
 package io.agileintelligence.ppmtool;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,10 @@ import java.security.Principal;
 @SpringBootApplication
 public class PpmtoolApplication {
 
-
+	@Bean
+	public ModelMapper modelMapper() {
+	    return new ModelMapper();
+	}
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
