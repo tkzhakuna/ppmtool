@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-	@Query("SELECT p FROM Project p WHERE p.projectIdentifier = ?1 or p.owner.username = ?2")
+	@Query("SELECT p FROM Project p WHERE p.projectIdentifier = ?1 AND p.owner.username = ?2")
     Project findByProjectIdentifier(String projectId,String username);
 
     @Override

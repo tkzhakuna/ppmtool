@@ -35,7 +35,7 @@ public class ProjectTaskService {
             //PTs to be added to a specific project, project != null, BL exists
             Backlog backlog =  projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog(); //backlogRepository.findByProjectIdentifier(projectIdentifier);
             //set the bl to pt
-            System.out.println(backlog);
+           
             projectTask.setBacklog(backlog);
             //we want our project sequence to be like this: IDPRO-1  IDPRO-2  ...100 101
             Integer BacklogSequence = backlog.getPTSequence();
