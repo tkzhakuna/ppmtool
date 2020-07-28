@@ -63,6 +63,7 @@ public class ProjectController {
 
     @GetMapping("/all")
     public List<Project> getAllProjects(Principal principal){
+    	
     	List<Project>projects=(List<Project>)projectService.findAllProjects(principal.getName());
     	for(Project proj:projects) {
     		User user=new User();

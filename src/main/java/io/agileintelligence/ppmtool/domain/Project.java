@@ -42,7 +42,7 @@ public class Project {
     @JsonIgnore
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "projects"})
     private User owner;
     
     private String projectLeader;
