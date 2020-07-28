@@ -29,6 +29,7 @@ import javax.validation.Valid;
 
 import static io.agileintelligence.ppmtool.security.SecurityConstants.TOKEN_PREFIX;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,9 +91,10 @@ public class UserController {
     }
     
     @GetMapping("/all")
-    public List<UserDTO>findAll(){
+    public List<UserDTO>findAll(Principal principal){
     	List<User>userList=cuds.findAll();
     	return userList.stream()
+    			.filter(user->!user.getUsername().equals(principal.getName()))
     	          .map(this::convertToDto)
     	          .collect(Collectors.toList());
     	

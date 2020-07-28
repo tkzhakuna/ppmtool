@@ -3,11 +3,11 @@ package io.agileintelligence.ppmtool.web;
 
 import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.domain.User;
-import io.agileintelligence.ppmtool.domain.UserDTO;
+
 import io.agileintelligence.ppmtool.services.MapValidationErrorService;
 import io.agileintelligence.ppmtool.services.ProjectService;
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +51,9 @@ public class ProjectController {
 
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId, Principal principal){
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId){
     	User user=new User();
-        Project project = projectService.findProjectByIdentifier(projectId, principal.getName());
+        Project project = projectService.findProjectByIdentifier(projectId);
         user.setId(project.getOwner().getId());
         user.setFullName(project.getOwner().getFullName());
         project.setOwner(user);

@@ -33,7 +33,7 @@ public class ProjectTaskService {
 
 
             //PTs to be added to a specific project, project != null, BL exists
-            Backlog backlog =  projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog(); //backlogRepository.findByProjectIdentifier(projectIdentifier);
+            Backlog backlog =  projectService.findProjectByIdentifier(projectIdentifier).getBacklog(); //backlogRepository.findByProjectIdentifier(projectIdentifier);
             //set the bl to pt
            
             projectTask.setBacklog(backlog);
@@ -65,9 +65,9 @@ public class ProjectTaskService {
 
     }
 
-    public Iterable<ProjectTask>findBacklogById(String id, String username){
+    public Iterable<ProjectTask>findBacklogById(String id){
 
-        projectService.findProjectByIdentifier(id, username);
+        projectService.findProjectByIdentifier(id);
 
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
@@ -76,7 +76,7 @@ public class ProjectTaskService {
     public ProjectTask findPTByProjectSequence(String backlog_id, String pt_id, String username){
 
         //make sure we are searching on an existing backlog
-        projectService.findProjectByIdentifier(backlog_id, username);
+        projectService.findProjectByIdentifier(backlog_id);
 
 
         //make sure that our task exists

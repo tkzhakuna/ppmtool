@@ -30,7 +30,7 @@ public class ProjectService {
     public Project saveOrUpdateProject(Project project, String username,Long ownerId){
 
         if(project.getId() != null){
-            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier(),username);
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
             if(existingProject !=null &&(!existingProject.getProjectLeader().equals(username))){
                 throw new ProjectNotFoundException("Project not found in your account");
             }else if(existingProject == null){
@@ -68,11 +68,11 @@ public class ProjectService {
     }
 
 
-    public Project findProjectByIdentifier(String projectId, String username){
+    public Project findProjectByIdentifier(String projectId){
 
         //Only want to return the project if the user looking for it is the owner
-
-        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase(), username);
+    	
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 
         if(project == null){
             throw new ProjectIdException("Project ID '"+projectId+"' does not exist");
@@ -96,7 +96,7 @@ public class ProjectService {
     public void deleteProjectByIdentifier(String projectid, String username){
 
 
-        projectRepository.delete(findProjectByIdentifier(projectid, username));
+        projectRepository.delete(findProjectByIdentifier(projectid));
     }
 
 }
